@@ -1,88 +1,158 @@
-## make-your-game
+# 🎮 Arkanoid Game Project
 
-With the passing of time and evolution of technology, the human brain has been requesting
-more and more stimuli to keep the brain occupied. Boredom happens whenever
-people don't receive enough of these stimuli. And you are not receiving enough
-of it, so you decide to make **your own game**. And to make it more challenging you decide to use
-JavaScript to make it.
+## Project Overview
 
-Your game will be single player only and you will have to create your
-own engine and tools for the game. And as you try to search for all sorts
-of information you start to remember all the 60 FPS memes.
+This is a modern, performance-optimized implementation of the classic Arkanoid (Brick Breaker) game built using pure JavaScript, HTML, and CSS. The project focuses on creating a smooth, responsive, and engaging gaming experience with a strong emphasis on performance and code quality.
 
-![59fps meme](resources/59fps.jpeg)
+![Game Preview](./src/assets/images/arkanoid.jpg)
 
-### Objectives
+## 🚀 Project Goals
 
-Here are some of the features you want to implement in your game:
+- Implement a classic Arkanoid gameplay experience
+- Achieve consistent 60 FPS performance
+- Create a modular, maintainable codebase
+- Provide responsive and smooth controls
+- Support multiple levels with increasing difficulty
 
-- Game runs at at least **60 FPS** at all times
-- No frame drops!
-- Proper use of **RequestAnimationFrame**
-- It is very hard to predict performances in JS. So measure performances to see if your code is fast. This will be tested!
-- Pause menu, that includes:
-  - Continue
-  - Restart
-- A score board that displays the following metrics:
-  - **Countdown clock or Timer** that will indicate the amount of time the player has until the game ends or the time that the game has been running
-  - **Score** that will display the current score (XP or points)
-  - **Lives** that shows the number of lives that the player has left
-- The use of layers must be minimal but not zero in order to optimize the rendering performance.
+## 📦 Project Structure
 
-You must not use frameworks or canvas, the game must be implemented using plain JS/DOM and HTML only
+```
+make-your-game/
+├── src/                # Source files
+│   ├── assets/         # Game assets (images, sounds)
+│   ├── js/             # JavaScript modules
+│   ├── styles/         # CSS stylesheets
+│   └── index.html      # Main game entry point
+├── tests/              # Unit and performance tests
+├── config/             # Build and development configurations
+├── docs/               # Project documentation
+└── README.md           # Project documentation
+```
 
-### Instructions
+## 🛠 Technologies Used
 
-Animation must have consistent motion, so in order to have a smooth animation (without interruptions or so called jank animation) you must achieve the special number, [**60 FPS**](https://www.algolia.com/developers-tech-blog/code-and-deep-dives/performant-web-animations/). You can see more about performance [here](../good-practices/README.md)
+- **Language**: Vanilla JavaScript
+- **Build Tool**: Webpack
+- **Linting**: ESLint
+- **Testing**: Jest
+- **Performance Monitoring**: Browser Performance API
 
-In order to play the game the player must only use the keyboard. The controls must be smooth, in other words you should not need to spam a key to take actions in the game. Instead, for example, if a key is kept pressed, the player must continue to do the relevant action. If the key is released the player should stop doing the action.
+## 🎯 Key Features
 
-Basically, motions triggered by a key must not jank or stutter.
+- Smooth paddle controls
+- Dynamic ball physics
+- Multiple brick types
+- Progressive difficulty levels
+- Pause menu
+- Performance-optimized rendering
+- Responsive design
 
-For the pause menu you must be able to pause, restart, and continue the game whenever you want to do so. The frames should not drop if paused.
+## 🛠 Development Setup
 
-### Pre-Approved List
+### Prerequisites
 
-Your game will have to respect the genre of one of these games listed below. In other words, the main goal of the game has to be similar to one of these:
+- Node.js (v14+ recommended)
+- npm or yarn
 
-- [Bomberman](https://en.wikipedia.org/wiki/Super_Bomberman)
-- [Flipper/ Pinball](https://en.wikipedia.org/wiki/Pinball)
-- [Space Invaders](https://en.wikipedia.org/wiki/Space_Invaders)
-- [Donkey Kong](https://en.wikipedia.org/wiki/Donkey_Kong)
-- [Brick Breaker/ Arkanoid](https://en.wikipedia.org/wiki/Arkanoid)
-- [Pac-Man](https://en.wikipedia.org/wiki/Pac-Man)
-- [Super Mario](https://en.wikipedia.org/wiki/Super_Mario)
-- [Tetris](https://en.wikipedia.org/wiki/Tetris)
-- [Duck Hunt](https://en.wikipedia.org/wiki/Duck_Hunt)
+### Installation Steps
 
-### Dev Tools
+1. Clone the repository
+```bash
+git clone https://github.com/Youssefhajjaoui/make-your-game.git
+cd arkanoid-game
+```
 
-We strongly advise you to use Developer Tools available in every browser (can be accessed using hot keys that depend on the browser or from the browser's Tools menu option).
+2. Install dependencies
+```bash
+npm install
+```
 
-Developer tools that will help the most with developing this project:
+3. Start development server
+```bash
+npm run start
+```
 
-- **Page Inspector**: You can view and edit page content and layout.
-- **Web Console**: You can see your `console.log`s and interact with the page using JavaScript.
-- **Performance Tool**: You can analyze your site's general responsiveness, performance, Javascript and layout performance.
+4. Build for production
+```bash
+npm run build
+```
 
-The tool that will help you the most is the Performance Tool. There you can record a sample of your actions on the site and analyze the FPS, check for frame drops, how much time your functions take to execute, and other useful metrics monitoring.
+## 🧪 Running Tests
 
-In the developer tools you can also find a Paint Flashing option that will highlight every paint that happens in your page as actions are performed on it.
+```bash
+npm run test
+```
 
-This project will help you learn about:
+## 📊 Performance Benchmarks
 
-- [`requestAnimationFrame`](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame)
-- [Event loop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop)
-- FPS
-- DOM
-- [Jank/stutter animation](https://murtada.nl/blog/going-jank-free-achieving-60-fps-smooth-websites)
-- [Transform](https://developer.mozilla.org/en-US/docs/Web/CSS/transform)/ [opacity](https://developer.mozilla.org/en-US/docs/Web/CSS/opacity)
-- Tasks
-  - JavaScript
-  - Styles
-  - Layout
-  - Painting
-  - Compositing
-- Developer Tools
-  - [Firefox](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_are_browser_developer_tools)
-  - [Chrome](https://developers.google.com/web/tools/chrome-devtools)
+- **Target Frame Rate**: 60 FPS
+- **Rendering**: Optimized DOM manipulation
+- **Physics**: Efficient collision detection
+
+## 🎮 Game Controls
+
+- **Left Arrow**: Move paddle left
+- **Right Arrow**: Move paddle right
+- **Spacebar**: Launch ball / Start game
+- **Escape**: Pause/Unpause game
+
+## 📈 Development Roadmap
+
+### Phase 1: Core Mechanics
+- [ ] Basic game loop
+- [ ] Paddle movement
+- [ ] Ball physics
+- [ ] Collision detection
+
+### Phase 2: Game Systems
+- [ ] Scoring system
+- [ ] Lives and game over mechanics
+- [ ] Level progression
+- [ ] Power-ups
+
+### Phase 3: Polish
+- [ ] Sound effects
+- [ ] Animations
+- [ ] Menu systems
+- [ ] Responsive design
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📋 Coding Standards
+
+- Follow ESLint rules
+- Write clean, modular code
+- Add comments for complex logic
+- Maintain performance considerations
+
+## 🔧 Troubleshooting
+
+- Ensure you're using a modern browser
+- Check console for any performance warnings
+- Verify Node.js and npm are up to date
+
+## 📜 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+## 👥 Team
+
+- Youssef Hajjaoui
+- Ilyass-Mohamed Foukahi
+
+Project Link: [https://github.com/Youssefhajjaoui/make-your-game](https://github.com/Youssefhajjaoui/make-your-game)
+
+## 🙏 Acknowledgements
+
+- Inspiration from classic Arkanoid game
+- Open-source community
+
+---
+
+**Happy Coding!** 🎮🕹️
