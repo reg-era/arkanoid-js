@@ -1,2 +1,8 @@
-// Player paddle logic
-// dik twichiya likatmchi otji orizontal
+export class paddle {
+    moveRight(){
+        
+    }
+    moveLeft(){
+
+    }
+}

@@ -1,2 +1,15 @@
-// Brick types and interactions
-// 9so7iyet ras dyal lbrikat ikon hna
+export class brick {
+    constructor(type){
+        this.type = type
+    }
+
+    setType(type){
+        this.type = type
+    }
+
+    distroy() {
+        if (this.type != 'hidden'){
+            this.setType('hidden')
+        }
+    }
+}

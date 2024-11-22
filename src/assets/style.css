@@ -1,0 +1,63 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body to center the container */
+body {
+    display: flex;
+    justify-content: center; /* Horizontally center */
+    align-items: center; /* Vertically center */
+    height: 100vh; /* Take up full viewport height */
+    background-color: black; /* Optionally set a black background */
+}
+
+/* Container */
+.container {
+    width: 800px;
+    height: 600px;
+    background-color: black; /* Black background for the game */
+    position: relative;
+    overflow: hidden;
+    border: 2px solid white; /* White border around the game area */
+
+    /* Setting up CSS Grid for the bricks */
+    display: grid;
+    grid-template-columns: repeat(10, 1fr); /* Create 10 equal-width columns */
+    grid-template-rows: repeat(10, 1fr); /* Create 5 equal-height rows */
+    gap: 5px; /* Add space between bricks */
+    padding: 10px; /* Optional padding around the grid */
+}
+
+/* Brick Style */
+.brick {
+    width: 100%; /* Make bricks take up full width of their grid cell */
+    height: 50%; /* Make bricks take up full height of their grid cell */
+    background-color: white; /* White bricks */
+    border: 1px solid black; /* Optional border for visibility */
+}
+
+/* Ball Style */
+.ball {
+    width: 20px;
+    height: 20px;
+    background-color: white; /* White ball */
+    border-radius: 50%; /* Makes the ball round */
+    position: absolute;
+    bottom: 100px; /* Ball's initial position */
+    left: 50%; /* Centered horizontally */
+    transform: translateX(-50%); /* Ensure it's perfectly centered */
+}
+
+/* Paddle Style */
+.paddle {
+    width: 100px;
+    height: 20px;
+    background-color: white; /* White paddle */
+    position: absolute;
+    bottom: 20px; /* Paddle sits at the bottom */
+    left: 50%; /* Initially centered horizontally */
+    transform: translateX(-50%); /* Ensure it's centered perfectly */
+}
