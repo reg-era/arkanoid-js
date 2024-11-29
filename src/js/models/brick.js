@@ -1,15 +1,20 @@
-export class brick {
-    constructor(type){
-        this.type = type
+import { Vector2D } from "./vectore.js";
+
+export class Brick {
+    constructor(width, height, health, type, position) {
+        this.width = width;
+        this.health = height;
+        this.health = health;
+        this.type = type;
+        this.position = Vector2D;
     }
 
-    setType(type){
-        this.type = type
+    hit(){
     }
 
-    distroy() {
-        if (this.type != 'hidden'){
-            this.setType('hidden')
-        }
+    isDistroyed(){
+    }
+
+    getPoint(){
     }
 }

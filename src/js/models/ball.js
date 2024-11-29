@@ -1,32 +1,21 @@
-export class ball {
-    constructor(speed,direction,{x,y}){
-        this.speed = speed;
-        this.direction = direction;
-        this.position = {x,y};
-    }
-    setdirection(direction){
-        this.direction = direction
-    }
-    setSpeed(speed){
+import { Vector2D } from "./vectore.js"
+
+export class Ball {
+    constructor(radius,speed) {
+        this.radius = radius
         this.speed = speed
+        this.velocity = Vector2D
     }
 
-    getPosion(){
-        return this.position
+    move() {
     }
 
-    touchBorn(born){
-        switch (born) {
-            case 'left':
-            case 'right':
-            case 'top':
-            case 'bottom':
-        }
+    bounce(surface){
     }
 
-    touchBrick(type){
-        if (type != 'hidden') {
-            this.direction
-        }
+    checkColision(obj){
+    }
+
+    resetPosition(){
     }
 }
