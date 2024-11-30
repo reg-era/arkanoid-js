@@ -24,16 +24,11 @@ export const main = () => {
     const paddle = document.createElement('div')
     paddle.classList.add('paddle')
 
-    const ball = document.createElement('div')
-    ball.classList.add('ball')
-
     container.appendChild(paddle)
-    container.appendChild(ball)
     document.body.appendChild(container)
 
     const game = new Game(container, level)
     game.initialize()
-    
 }
 
 main()

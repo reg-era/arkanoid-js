@@ -40,15 +40,14 @@ body {
 
 /* Ball Style */
 .ball {
+    z-index: 999;
     width: 20px;
     height: 20px;
-    background-color: white; /* White ball */
-    border-radius: 50%; /* Makes the ball round */
+    background-color: rgb(255, 0, 0); /* White ball */
+    border-radius: 50%; 
     position: absolute;
-    bottom: 100px; /* Ball's initial position */
-    left: 50%; /* Centered horizontally */
-    transform: translateX(-50%); /* Ensure it's perfectly centered */
 }
+
 
 /* Paddle Style */
 .paddle {

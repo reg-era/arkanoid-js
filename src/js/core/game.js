@@ -10,7 +10,7 @@ export class Game {
 
         this.player = new Player()
         this.paddle = new Paddle(this.container)
-        this.ball = new Ball()
+        this.ball = new Ball(this.container)
         this.bricks = []
 
         this.isGameOver = false
@@ -43,6 +43,8 @@ export class Game {
     }
 
     handleKeyPress(event) {
+        // console.log('begin');
+
         if (this.isPaused) return;
 
         switch (event.key) {
@@ -53,7 +55,10 @@ export class Game {
                 this.paddle.moveRight()
                 break
             case ' ':
-                this.ball.move()
+                this.start()
+                // console.log('spase');
+                // 
+                // !this.isPaused ? this.start() : this.pause()
                 break
         }
     }
@@ -100,16 +105,9 @@ export class Game {
         }
     }
 
-    levelComplete() {
-        this.isPaused = true;
-    }
-
-    gameOver() {
-        this.isGameOver = true;
-    }
-
-    resetBall() {
-        this.ball.reset(this.paddle.getPosition());
+    start() {
+        this.ball.move()
+        requestAnimationFrame(this.start.bind(this))
     }
 
     pause() {
@@ -124,17 +122,15 @@ export class Game {
         this.isPaused = false;
     }
 
-    start() {
-        // this.gameLoop();
+    levelComplete() {
+        this.isPaused = true;
     }
 
-    gameLoop(timestamp) {
-        // const deltaTime = timestamp - this.lastFrameTime;
-        // this.lastFrameTime = timestamp;
-        // 
-        // this.update(deltaTime);
-        // this.render();
-        // 
-        // requestAnimationFrame(this.gameLoop.bind(this));
+    gameOver() {
+        this.isGameOver = true;
+    }
+
+    resetBall() {
+        this.ball.reset(this.paddle.getPosition());
     }
 }
