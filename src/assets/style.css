@@ -28,14 +28,13 @@ body {
     grid-template-columns: repeat(10, 1fr); /* Create 10 equal-width columns */
     grid-template-rows: repeat(10, 1fr); /* Create 5 equal-height rows */
     gap: 5px; /* Add space between bricks */
-    padding: 10px; /* Optional padding around the grid */
+    padding-top: 20px; /* Optional padding around the grid */
 }
 
 /* Brick Style */
 .brick {
     width: 100%; /* Make bricks take up full width of their grid cell */
     height: 50%; /* Make bricks take up full height of their grid cell */
-    background-color: white; /* White bricks */
     border: 1px solid black; /* Optional border for visibility */
 }
 
@@ -55,8 +54,8 @@ body {
 .paddle {
     width: 100px;
     height: 20px;
-    background-color: white; /* White paddle */
     position: absolute;
+    background-color: white;
     bottom: 20px; /* Paddle sits at the bottom */
     left: 50%; /* Initially centered horizontally */
     transform: translateX(-50%); /* Ensure it's centered perfectly */

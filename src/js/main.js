@@ -2,15 +2,20 @@ import { Game } from "./core/game.js"
 
 export const main = () => {
     const level = {
-        1: {
-            map: [
-                [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
-                [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
-                [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
-                [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
-                [0, 0, 0, 1, 1, 1, 1, 0, 0, 0]
-            ]
-        }
+        "1": [
+            [0, 0, 1, 1, 0, 1, 1, 0, 0, 0],
+            [0, 1, 0, 0, 1, 0, 0, 1, 0, 0],
+            [0, 0, 1, 0, 0, 0, 1, 0, 0, 0],
+            [0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0]
+        ],
+        "2": [
+            [0, 0, 1, 1, 1, 1, 1, 1, 0, 0],
+            [0, 0, 1, 0, 1, 1, 0, 1, 0, 0],
+            [0, 0, 1, 1, 1, 1, 1, 1, 0, 0],
+            [0, 0, 1, 0, 1, 1, 0, 1, 0, 0],
+            [0, 0, 1, 1, 1, 1, 1, 1, 0, 0]
+        ]
     }
 
     const container = document.createElement('div')
@@ -26,8 +31,9 @@ export const main = () => {
     container.appendChild(ball)
     document.body.appendChild(container)
 
-    const game = new Game(container,level)
-    game.start()
+    const game = new Game(container, level)
+    game.initialize()
+    
 }
 
 main()

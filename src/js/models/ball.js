@@ -1,13 +1,12 @@
-import { Vector2D } from "./vectore.js"
-
 export class Ball {
-    constructor(radius,speed) {
-        this.radius = radius
+    constructor(speed) {
         this.speed = speed
         this.velocity = Vector2D
     }
 
     move() {
+        this.velocity.x++
+        this.velocity.x--
     }
 
     bounce(surface){

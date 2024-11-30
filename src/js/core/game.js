@@ -6,10 +6,10 @@ import { Brick } from "../models/brick.js";
 export class Game {
     constructor(session, road) {
         this.container = session
-        this.levels = road
+        this.level = road
 
         this.player = new Player()
-        this.paddle = new Paddle()
+        this.paddle = new Paddle(this.container)
         this.ball = new Ball()
         this.bricks = []
 
@@ -23,8 +23,19 @@ export class Game {
     }
 
     createBricks() {
-        console.log(this.road);
-        
+        this.level['2'].forEach(row => {
+            row.forEach(bri => {
+                let type
+                if (bri == 1) {
+                    type = 'normal'
+                } else {
+                    type = 'empty'
+                }
+                const brick = new Brick(type)
+                brick.render(this.container)
+                this.bricks.push(brick)
+            })
+        })
     }
 
     setupEventListeners() {
@@ -42,7 +53,7 @@ export class Game {
                 this.paddle.moveRight()
                 break
             case ' ':
-                this.ball.launch()
+                this.ball.move()
                 break
         }
     }
@@ -89,9 +100,6 @@ export class Game {
         }
     }
 
-    render() {
-    }
-
     levelComplete() {
         this.isPaused = true;
     }
@@ -117,16 +125,16 @@ export class Game {
     }
 
     start() {
-        this.gameLoop();
+        // this.gameLoop();
     }
 
     gameLoop(timestamp) {
-        const deltaTime = timestamp - this.lastFrameTime;
-        this.lastFrameTime = timestamp;
-
-        this.update(deltaTime);
-        this.render();
-
-        requestAnimationFrame(this.gameLoop.bind(this));
+        // const deltaTime = timestamp - this.lastFrameTime;
+        // this.lastFrameTime = timestamp;
+        // 
+        // this.update(deltaTime);
+        // this.render();
+        // 
+        // requestAnimationFrame(this.gameLoop.bind(this));
     }
 }
