@@ -40,9 +40,6 @@ body {
 
 /* Ball Style */
 .ball {
-    z-index: 999;
-    width: 20px;
-    height: 20px;
     background-color: rgb(255, 0, 0); /* White ball */
     border-radius: 50%; 
     position: absolute;
@@ -51,7 +48,7 @@ body {
 
 /* Paddle Style */
 .paddle {
-    width: 100px;
+    width: 150px;
     height: 20px;
     position: absolute;
     background-color: white;

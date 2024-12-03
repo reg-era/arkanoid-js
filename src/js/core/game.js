@@ -43,22 +43,19 @@ export class Game {
     }
 
     handleKeyPress(event) {
-        // console.log('begin');
-
-        if (this.isPaused) return;
+        console.log('begin');
 
         switch (event.key) {
             case 'ArrowLeft':
+                console.log('left');
                 this.paddle.moveLeft()
                 break
             case 'ArrowRight':
+                console.log('right');
                 this.paddle.moveRight()
                 break
             case ' ':
-                this.start()
-                // console.log('spase');
-                // 
-                // !this.isPaused ? this.start() : this.pause()
+                    this.start()
                 break
         }
     }
