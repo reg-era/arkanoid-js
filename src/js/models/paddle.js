@@ -1,37 +1,35 @@
 export class Paddle {
-    constructor(object) {
-        this.paddle = object.querySelector('.paddle')
-        this.position = (object.getBoundingClientRect().right - object.getBoundingClientRect().left) / 2
-        const midleWidth = (this.paddle.getBoundingClientRect().right - this.paddle.getBoundingClientRect().left)
-        this.boundLeft = object.getBoundingClientRect().left - (midleWidth / 2) - 20
-        this.boundright = object.getBoundingClientRect().right - (midleWidth * 2) + 20
-        
-        this.speed = 15
+    constructor(container) {
+        this.width = 140
+        this.speed = 10
+
+        this.paddle = this.createPaddle(container)
+        this.position = Number.parseFloat(this.paddle.style.left.slice(0, -2))
+        this.boundLeft = container.getBoundingClientRect().x
+        this.boundright = container.getBoundingClientRect().right
+    }
+
+    createPaddle(container) {
+        const paddle = container.querySelector('.paddle')
+        const rect = container.getBoundingClientRect()
+
+        paddle.style.width = this.width + 'px'
+        paddle.style.left = ((rect.right - this.width) / 2) + 'px'
+
+        return paddle
     }
 
     moveLeft() {
-        if (!this.checkBoundary('left')) {
-            const newposi = this.position - this.speed
-            this.paddle.style.left = newposi + 'px';
-            this.updatePosition(newposi)
+        if (this.position >= this.boundLeft) {
+            this.paddle.style.left = this.position - this.speed + 'px'
+            this.position -= this.speed
         }
     }
 
     moveRight() {
-        if (!this.checkBoundary('right')) {
-            const newposi = this.position + this.speed
-            this.paddle.style.left = newposi + 'px';
-            this.updatePosition(newposi)
+        if (this.position+this.width <= this.boundright) {
+            this.paddle.style.left = this.position + this.speed + 'px'
+            this.position += this.speed
         }
-    }
-
-    updatePosition(number) {
-        this.position = number
-    }
-
-    checkBoundary(direction) {
-        return (direction === 'left') ?
-            this.position <= this.boundLeft :
-            this.position >= this.boundright
     }
 }

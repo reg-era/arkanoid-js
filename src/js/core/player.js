@@ -1,12 +1,16 @@
 export class Player {
-    constructor(score,lives){
+    constructor(score, lives) {
         this.score = score;
         this.lives = lives;
     }
 
-    incrementScore(){}
-    decrementLives(){}
+    incrementScore(num) {
+        this.score += num
+    }
+    decrementLives() {
+        this.lives--
+    }
 
-    getScore(){}
-    getLives(){}
+    getScore() { }
+    getLives() { }
 }

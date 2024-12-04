@@ -15,6 +15,13 @@ export const main = () => {
             [0, 0, 1, 1, 1, 1, 1, 1, 0, 0],
             [0, 0, 1, 0, 1, 1, 0, 1, 0, 0],
             [0, 0, 1, 1, 1, 1, 1, 1, 0, 0]
+        ],
+        "3": [
+            [0, 0, 1, 1, 1, 1, 1, 1, 0, 0],
+            [0, 0, 1, 0, 0, 0, 0, 1, 0, 0],
+            [0, 0, 1, 0, 0, 0, 0, 1, 0, 0],
+            [0, 0, 1, 0, 0, 0, 0, 1, 0, 0],
+            [0, 0, 1, 1, 1, 1, 1, 1, 0, 0]
         ]
     }
 
@@ -28,7 +35,6 @@ export const main = () => {
     document.body.appendChild(container)
 
     const game = new Game(container, level)
-    game.initialize()
 }
 
 main()

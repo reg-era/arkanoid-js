@@ -4,9 +4,9 @@ import { Ball } from "../models/ball.js";
 import { Brick } from "../models/brick.js";
 
 export class Game {
-    constructor(session, road) {
-        this.container = session
-        this.level = road
+    constructor(container, level) {
+        this.container = container
+        this.level = level
 
         this.player = new Player()
         this.paddle = new Paddle(this.container)
@@ -15,15 +15,14 @@ export class Game {
 
         this.isGameOver = false
         this.isPaused = false
-    }
+        this.isStarted = false
 
-    initialize() {
         this.createBricks();
         this.setupEventListeners();
     }
 
     createBricks() {
-        this.level['2'].forEach(row => {
+        this.level['3'].forEach(row => {
             row.forEach(bri => {
                 let type
                 if (bri == 1) {
@@ -31,7 +30,7 @@ export class Game {
                 } else {
                     type = 'empty'
                 }
-                const brick = new Brick(type)
+                const brick = new Brick(type, this.ball.ball)
                 brick.render(this.container)
                 this.bricks.push(brick)
             })
@@ -39,71 +38,44 @@ export class Game {
     }
 
     setupEventListeners() {
-        document.addEventListener('keydown', this.handleKeyPress.bind(this));
-    }
-
-    handleKeyPress(event) {
-        console.log('begin');
-
-        switch (event.key) {
-            case 'ArrowLeft':
-                console.log('left');
-                this.paddle.moveLeft()
-                break
-            case 'ArrowRight':
-                console.log('right');
-                this.paddle.moveRight()
-                break
-            case ' ':
-                    this.start()
-                break
-        }
-    }
-
-    update(deltaTime) {
-        if (this.isGameOver || this.isPaused) return;
-
-        this.ball.update(deltaTime);
-        this.checkCollisions();
-        this.updateGameState();
-    }
-
-    checkCollisions() {
-        this.checkWallCollisions();
-        this.checkPaddleCollision();
-        this.checkBrickCollisions();
-    }
-
-    checkWallCollisions() {
-        // Implement wall collision logic
-    }
-
-    checkPaddleCollision() {
-        // Implement paddle collision logic
-    }
-
-    checkBrickCollisions() {
-        // Implement brick collision logic
-    }
-
-    updateGameState() {
-        if (this.bricks.every(brick => brick.isDestroyed())) {
-            this.levelComplete();
-        }
-
-        if (this.ball.isOutOfBounds()) {
-            this.player.decrementLives();
-
-            if (this.player.getLives() <= 0) {
-                this.gameOver();
-            } else {
-                this.resetBall();
+        document.addEventListener('keydown', (event) => {
+            switch (event.key) {
+                case 'ArrowLeft':
+                    this.paddle.moveLeft()
+                    if (!this.isStarted) {
+                        this.ball.setPosition(this.paddle.speed + this.paddle.position + (this.paddle.width / 2))
+                    }
+                    break
+                case 'ArrowRight':
+                    this.paddle.moveRight()
+                    if (!this.isStarted) {
+                        this.ball.setPosition(this.paddle.speed + this.paddle.position + (this.paddle.width / 2))
+                    }
+                    break
+                case ' ':
+                    if (!this.isStarted && !this.isPaused) {
+                        this.start()
+                        this.isStarted = true
+                    } else {
+                        this.isPaused = true
+                        this.pause()
+                    }
+                    break
             }
-        }
+        });
     }
 
     start() {
         this.ball.move()
+        for (let i = 0; i < this.bricks.length; i++) {
+            if (this.bricks[i].distroyed || this.bricks[i].type === 'empty') continue
+            const colis = this.bricks[i].isDistroyed()
+            if (colis) {
+                const brickRect = this.bricks[i].brick.getBoundingClientRect()
+                console.log(brickRect);
+                this.ball.changeDirection(this.bricks[i].brick.getBoundingClientRect())
+            }
+        }
         requestAnimationFrame(this.start.bind(this))
     }
 
