@@ -1,6 +1,6 @@
 import { Game } from "./core/game.js"
 
-export const main = () => {
+export const main = async () => {
     const level = {
         "1": [
             [0, 0, 1, 1, 0, 1, 1, 0, 0, 0],
@@ -34,7 +34,14 @@ export const main = () => {
     container.appendChild(paddle)
     document.body.appendChild(container)
 
-    const game = new Game(container, level)
+    for (let [nb, lv] of Object.entries(level)) {
+        const game = new Game(container, lv)
+        console.log('iswaiting');
+        await game.gameOver() 
+        console.log('done');
+        
+        return
+    }
 }
 
 main()

@@ -1,7 +1,7 @@
 export class Paddle {
     constructor(container) {
         this.width = 140
-        this.speed = 10
+        this.speed = 20
 
         this.paddle = this.createPaddle(container)
         this.position = Number.parseFloat(this.paddle.style.left.slice(0, -2))

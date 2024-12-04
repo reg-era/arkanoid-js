@@ -6,7 +6,7 @@ export class Ball {
         this.directionX = 0
         this.directionY = -1
         this.size = 26
-        this.speed = 5
+        this.speed = 8
         this.ball = this.createBall()
     }
 

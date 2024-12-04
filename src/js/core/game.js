@@ -22,7 +22,9 @@ export class Game {
     }
 
     createBricks() {
-        this.level['3'].forEach(row => {
+        console.log(this.level);
+        
+        this.level.forEach(row => {
             row.forEach(bri => {
                 let type
                 if (bri == 1) {
@@ -72,8 +74,7 @@ export class Game {
             const colis = this.bricks[i].isDistroyed()
             if (colis) {
                 const brickRect = this.bricks[i].brick.getBoundingClientRect()
-                console.log(brickRect);
-                this.ball.changeDirection(this.bricks[i].brick.getBoundingClientRect())
+                this.ball.changeDirection(brickRect)
             }
         }
         requestAnimationFrame(this.start.bind(this))
@@ -96,9 +97,20 @@ export class Game {
     }
 
     gameOver() {
-        this.isGameOver = true;
-    }
+        return new Promise((resolve, reject) => {
+            const checkLevel = () => {
+                const allZeros = this.level.every(row => row.every(cell => cell === 0));
 
+                if (allZeros) {
+                    resolve(true);
+                } else {
+                    setTimeout(checkLevel, 100)
+                }
+            };
+
+            checkLevel();
+        });
+    }
     resetBall() {
         this.ball.reset(this.paddle.getPosition());
     }
