@@ -4,13 +4,15 @@ import { Ball } from "../models/ball.js";
 import { Brick } from "../models/brick.js";
 
 export class Game {
-    constructor(container, level) {
-        this.container = container
+    constructor(containers, level) {
+        this.model = containers
+
+        this.container = this.model.container
         this.level = level
 
         this.player = new Player()
-        this.paddle = new Paddle(this.container)
-        this.ball = new Ball(this.container)
+        this.paddle = new Paddle(this.model.paddleContainer)
+        this.ball = new Ball(this.model.container)
         this.bricks = []
 
         this.isGameOver = false
@@ -22,18 +24,22 @@ export class Game {
     }
 
     createBricks() {
-        console.log(this.level);
-        
         this.level.forEach(row => {
-            row.forEach(bri => {
-                let type
-                if (bri == 1) {
-                    type = 'normal'
-                } else {
-                    type = 'empty'
+            row.forEach(number => {
+                let type, value
+                switch (number) {
+                    case 1:
+                        type = 'type1'
+                        value = false
+                        break;
+                    default:
+                        type = 'type0'
+                        value = true
+                        break;
                 }
-                const brick = new Brick(type, this.ball.ball)
-                brick.render(this.container)
+                
+                const brick = new Brick(type, value, this.ball.ball)
+                brick.render(this.model.brickContainer)
                 this.bricks.push(brick)
             })
         })
@@ -70,9 +76,7 @@ export class Game {
     start() {
         this.ball.move()
         for (let i = 0; i < this.bricks.length; i++) {
-            if (this.bricks[i].distroyed || this.bricks[i].type === 'empty') continue
-            const colis = this.bricks[i].isDistroyed()
-            if (colis) {
+            if (!this.bricks[i].distroyed && this.bricks[i].isDistroyed()) {
                 const brickRect = this.bricks[i].brick.getBoundingClientRect()
                 this.ball.changeDirection(brickRect)
             }

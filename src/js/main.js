@@ -1,45 +1,30 @@
 import { Game } from "./core/game.js"
+import { createContainers } from "./utils/maker.js"
 
 export const main = async () => {
     const level = {
         "1": [
-            [0, 0, 1, 1, 0, 1, 1, 0, 0, 0],
-            [0, 1, 0, 0, 1, 0, 0, 1, 0, 0],
-            [0, 0, 1, 0, 0, 0, 1, 0, 0, 0],
-            [0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
-            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0]
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         ],
-        "2": [
-            [0, 0, 1, 1, 1, 1, 1, 1, 0, 0],
-            [0, 0, 1, 0, 1, 1, 0, 1, 0, 0],
-            [0, 0, 1, 1, 1, 1, 1, 1, 0, 0],
-            [0, 0, 1, 0, 1, 1, 0, 1, 0, 0],
-            [0, 0, 1, 1, 1, 1, 1, 1, 0, 0]
-        ],
-        "3": [
-            [0, 0, 1, 1, 1, 1, 1, 1, 0, 0],
-            [0, 0, 1, 0, 0, 0, 0, 1, 0, 0],
-            [0, 0, 1, 0, 0, 0, 0, 1, 0, 0],
-            [0, 0, 1, 0, 0, 0, 0, 1, 0, 0],
-            [0, 0, 1, 1, 1, 1, 1, 1, 0, 0]
-        ]
     }
 
-    const container = document.createElement('div')
-    container.classList.add('container')
-
-    const paddle = document.createElement('div')
-    paddle.classList.add('paddle')
-
-    container.appendChild(paddle)
-    document.body.appendChild(container)
+    const containers = createContainers()
 
     for (let [nb, lv] of Object.entries(level)) {
-        const game = new Game(container, lv)
+        const game = new Game(containers, lv)
         console.log('iswaiting');
-        await game.gameOver() 
+        await game.gameOver()
         console.log('done');
-        
+
         return
     }
 }

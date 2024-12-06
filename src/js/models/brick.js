@@ -1,7 +1,7 @@
 export class Brick {
-    constructor(type, ball) {
-        this.Distroyed = false
+    constructor(type, value, ball) {
         this.type = type
+        this.distroyed = value
         this.ball = ball
         this.brick
     }
@@ -9,16 +9,9 @@ export class Brick {
     render(container) {
         const elem = document.createElement('div')
         elem.classList.add('brick')
-        switch (this.type) {
-            case 'empty':
-                this.Distroyed = true
-                elem.style.backgroundColor = 'black'
-                break
-            case 'normal':
-                elem.style.backgroundColor = 'white'
-                break
-        }
         this.brick = elem
+
+        this.setBrick(this.type, this.value)
         container.appendChild(elem)
     }
 
@@ -26,20 +19,29 @@ export class Brick {
         const brickRect = this.brick.getBoundingClientRect()
         const ballRect = this.ball.getBoundingClientRect()
 
-        if (ballRect.y <= brickRect.bottom &&
+        if (!this.distroyed && (ballRect.y <= brickRect.bottom &&
             ballRect.x <= brickRect.right &&
             ballRect.right >= brickRect.x &&
-            ballRect.bottom >= brickRect.y) {
-            console.log('Brick destroyed');
-            this.setBrick()
+            ballRect.bottom >= brickRect.y)) {
+
+            this.setBrick('type0', true)
             return true
         }
         return false
     }
 
-    setBrick() {
-        this.type = 'empty'
-        this.Distroyed = true
-        this.brick.style.backgroundColor = 'black'
+    setBrick(type, value) {
+        switch (type) {
+            case 'type0':
+                this.brick.style.background = 'black'
+                this.brick.style.border = 'none'
+                break;
+            case 'type1':
+                this.brick.style.background = 'linear-gradient(135deg, #4A00E0, #8E2DE2)'
+                this.brick.style.border = '1px solid #64FFDA'
+                break;
+        }
+        this.type = type
+        this.distroyed = value
     }
 }

@@ -6,7 +6,7 @@ export class Ball {
         this.directionX = 0
         this.directionY = -1
         this.size = 26
-        this.speed = 8
+        this.speed = 3
         this.ball = this.createBall()
     }
 
@@ -74,7 +74,11 @@ export class Ball {
         this.x = x
         this.y = y - this.size
 
-        document.body.appendChild(ball);
+        this.container.appendChild(ball);
         return ball;
+    }
+
+    setPosition(width){        
+        this.ball.style.left = width + 'px'
     }
 }
