@@ -1,7 +1,7 @@
 export class Brick {
     constructor(type, value, ball) {
         this.type = type
-        this.distroyed = value // problem still in this variable
+        this.distroyed = value
         this.ball = ball
         this.brick
     }
@@ -11,7 +11,7 @@ export class Brick {
         elem.classList.add('brick')
         this.brick = elem
 
-        this.setBrick(this.type, this.value)
+        this.setBrick(this.type, this.distroyed)
         container.appendChild(elem)
     }
 
@@ -24,9 +24,7 @@ export class Brick {
             ballRect.right >= brickRect.x &&
             ballRect.bottom >= brickRect.y)) {
 
-            console.log(this);
-            this.distroyed = false
-            // this.setBrick('type0', true)
+            this.setBrick('type0',true)
             return true
         }
         return false

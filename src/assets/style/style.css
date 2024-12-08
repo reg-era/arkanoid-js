@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 :root {
     --neon-blue: #64FFDA;
     --neon-purple: #8E2DE2;
@@ -8,11 +10,11 @@
 * {
     margin: 0;
     padding: 0;
+    font-family: 'Press Start 2P', cursive;
 }
 
 body {
     background-color: black;
-    font-family: 'Press Start 2P', cursive;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -23,6 +25,34 @@ body {
     width: 800px;
     height: 100px;
     margin-top: 20px;
+    padding: 0 20px;
+    border: 4px solid var(--neon-blue);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+h1 {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 30px;
+    color: var(--neon-blue);
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+}
+
+h1 span {
+    color: var(--neon-purple);
+    font-size: 32px;
+    text-shadow: 0 0 5px var(--neon-green), 0 0 10px var(--neon-green);
+}
+
+.levels {
+    width: 100px;
+    height: 60px;
+    font-size: 50px;
 }
 
 .container {
@@ -32,7 +62,7 @@ body {
     border: 4px solid var(--neon-blue);
     border-radius: 10px;
     box-shadow: 0 0 40px var(--galaxy-purple);
-    }
+}
 
 .bricks-container {
     width: 800px;

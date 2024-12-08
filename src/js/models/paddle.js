@@ -11,8 +11,6 @@ export class Paddle {
 
     createPaddle(container) {
         const paddle = container.querySelector('.paddle')
-        console.log(container);
-        
         const rect = container.getBoundingClientRect()
 
         paddle.style.width = this.width + 'px'

@@ -4,17 +4,20 @@ import { Ball } from "../models/ball.js";
 import { Brick } from "../models/brick.js";
 
 export class Game {
-    constructor(containers, level) {
+    constructor(containers, level, player) {
+        this.initializeGame()
+
         this.model = containers
 
         this.container = this.model.container
         this.level = level
 
-        this.player = new Player()
+        this.player = player
         this.paddle = new Paddle(this.model.paddleContainer)
         this.ball = new Ball(this.model.container)
         this.bricks = []
 
+        this.count = 0
         this.isGameOver = false
         this.isPaused = false
         this.isStarted = false
@@ -23,12 +26,19 @@ export class Game {
         this.setupEventListeners();
     }
 
+    initializeGame() {
+        const bricks = document.querySelectorAll('.brick')
+        if (bricks.length > 0) { bricks.forEach(el => el.remove()) }
+    }
+
     createBricks() {
         this.level.forEach(row => {
+            console.log(row.length);
             row.forEach(number => {
                 let type, value
                 switch (number) {
                     case 1:
+                        this.count++
                         type = 'type1'
                         value = false
                         break;
@@ -37,7 +47,7 @@ export class Game {
                         value = true
                         break;
                 }
-                
+
                 const brick = new Brick(type, value, this.ball.ball)
                 brick.render(this.model.brickContainer)
                 this.bricks.push(brick)
@@ -74,9 +84,13 @@ export class Game {
     }
 
     start() {
+        console.log(this.count);
+
         this.ball.move()
         for (let i = 0; i < this.bricks.length; i++) {
             if (!this.bricks[i].distroyed && this.bricks[i].isDistroyed()) {
+                this.count--
+                this.player.incrementScore(5)
                 const brickRect = this.bricks[i].brick.getBoundingClientRect()
                 this.ball.changeDirection(brickRect)
             }
@@ -103,9 +117,7 @@ export class Game {
     gameOver() {
         return new Promise((resolve, reject) => {
             const checkLevel = () => {
-                const allZeros = this.level.every(row => row.every(cell => cell === 0));
-
-                if (allZeros) {
+                if (this.count <= 0) {
                     resolve(true);
                 } else {
                     setTimeout(checkLevel, 100)

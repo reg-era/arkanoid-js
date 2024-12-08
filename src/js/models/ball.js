@@ -56,11 +56,14 @@ export class Ball {
     }
 
     createBall() {
-        const paddle = document.querySelector('.paddle');
-        const ball = document.createElement('div');
-        ball.classList.add('ball');
-        const rect = paddle.getBoundingClientRect();
-        console.log(this.size);
+        const prevBall = document.querySelector('.ball')
+        if (prevBall) {
+            prevBall.remove();
+        }
+        const paddle = document.querySelector('.paddle')
+        const ball = document.createElement('div')
+        ball.classList.add('ball')
+        const rect = paddle.getBoundingClientRect()
 
         ball.style.width = this.size + 'px'
         ball.style.height = this.size + 'px'
