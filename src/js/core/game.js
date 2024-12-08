@@ -1,12 +1,9 @@
-import { Player } from "./player.js";
 import { Paddle } from "../models/paddle.js";
 import { Ball } from "../models/ball.js";
 import { Brick } from "../models/brick.js";
 
 export class Game {
     constructor(containers, level, player) {
-        this.initializeGame()
-
         this.model = containers
 
         this.container = this.model.container
@@ -29,11 +26,11 @@ export class Game {
     initializeGame() {
         const bricks = document.querySelectorAll('.brick')
         if (bricks.length > 0) { bricks.forEach(el => el.remove()) }
+
     }
 
     createBricks() {
         this.level.forEach(row => {
-            console.log(row.length);
             row.forEach(number => {
                 let type, value
                 switch (number) {
@@ -76,58 +73,47 @@ export class Game {
                         this.isStarted = true
                     } else {
                         this.isPaused = true
-                        this.pause()
                     }
                     break
             }
         });
     }
 
-    start() {
-        console.log(this.count);
-
-        this.ball.move()
-        for (let i = 0; i < this.bricks.length; i++) {
-            if (!this.bricks[i].distroyed && this.bricks[i].isDistroyed()) {
-                this.count--
-                this.player.incrementScore(5)
-                const brickRect = this.bricks[i].brick.getBoundingClientRect()
-                this.ball.changeDirection(brickRect)
+    async start() {
+        try {
+            this.ball.move()
+            if (this.isPaused) {
+                await this.player.menu()
+                this.isPaused = false
             }
+            for (let i = 0; i < this.bricks.length; i++) {
+                if (!this.bricks[i].distroyed && this.bricks[i].isDistroyed()) {
+                    this.count--
+                    if (this.count <= 0) this.isGameOver = true
+                    this.player.incrementScore(5)
+                    const brickRect = this.bricks[i].brick.getBoundingClientRect()
+                    this.ball.changeDirection(brickRect)
+                }
+            }
+            requestAnimationFrame(this.start.bind(this))
+        } catch (error) {
+            this.isGameOver = true
         }
-        requestAnimationFrame(this.start.bind(this))
-    }
-
-    pause() {
-        this.isPaused = !this.isPaused;
-    }
-
-    restart() {
-        this.player.reset();
-        this.ball.reset();
-        this.createBricks();
-        this.isGameOver = false;
-        this.isPaused = false;
-    }
-
-    levelComplete() {
-        this.isPaused = true;
     }
 
     gameOver() {
         return new Promise((resolve, reject) => {
             const checkLevel = () => {
-                if (this.count <= 0) {
+                if (this.isGameOver) {
+                    this.initializeGame()
+                    this.isStarted = false
+                    if (this.count) resolve(false)
                     resolve(true);
                 } else {
                     setTimeout(checkLevel, 100)
                 }
-            };
-
-            checkLevel();
-        });
-    }
-    resetBall() {
-        this.ball.reset(this.paddle.getPosition());
+            }
+            checkLevel()
+        })
     }
 }
