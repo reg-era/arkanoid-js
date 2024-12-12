@@ -3,14 +3,25 @@ export class Player {
         this.info = infos
         this.score = 0
         this.level = 1
+        this.stats = []
+
         this.menuDisplayed = false
+        this.lobyDisplayed = false
 
         addEventListener('keydown', (e) => {
             if (e.key == 'Escape') this.loby()
         })
     }
 
-    loby() { }
+    loby() { 
+        if (!this.lobyDisplayed){
+            this.lobyDisplayed = true
+            this.displayLoby()
+        }else{
+            document.querySelector('.loby').remove()
+            this.lobyDisplayed = false
+        }
+    }
 
     menu() {
         if (!this.menuDisplayed) {
@@ -45,6 +56,18 @@ export class Player {
         `
         document.body.appendChild(menu)
         return [document.querySelector('.continue'), document.querySelector('.restar')]
+    }
+
+    displayLoby(){
+        const loby = document.createElement('div')
+        loby.classList.add('loby')
+        loby.innerHTML = `
+        <h1>game stats</h1>
+        ${this.stats.map(val=>`<h2>level: <span>${val.level}</span>score: <span>${val.score}</span></h2><br>`)}
+        <button class="replay">replay</button>
+        `
+        document.body.appendChild(loby)
+        return document.querySelector('.replay')
     }
 
     removeMenu() {
