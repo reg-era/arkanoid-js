@@ -15,6 +15,7 @@ export class Game {
         this.bricks = []
 
         this.count = 0
+        this.state = ''
         this.isGameOver = false
         this.isPaused = false
         this.isStarted = false
@@ -68,12 +69,11 @@ export class Game {
                     }
                     break
                 case ' ':
-                    if (this.isStarted && !this.isPaused) {
-                        this.isPaused = true
-                    }
                     if (!this.isStarted) {
                         this.isStarted = true
                         this.start()
+                    } else if (this.isStarted && !this.isPaused) {
+                        this.isPaused = true
                     }
                     break
             }
@@ -87,10 +87,17 @@ export class Game {
                 await this.player.menu()
                 this.isPaused = false
             }
+            if ((this.ball.y + this.ball.size) >= this.container.getBoundingClientRect().bottom) {
+                this.state = 'lose'
+                this.isGameOver = true
+            }
             for (let i = 0; i < this.bricks.length; i++) {
                 if (!this.bricks[i].distroyed && this.bricks[i].isDistroyed()) {
                     this.count--
-                    if (this.count <= 0) this.isGameOver = true
+                    if (this.count <= 0) {
+                        this.state = 'win'
+                        this.isGameOver = true
+                    }
                     this.player.incrementScore(5)
                     const brickRect = this.bricks[i].brick.getBoundingClientRect()
                     this.ball.changeDirection(brickRect)
@@ -98,6 +105,7 @@ export class Game {
             }
             requestAnimationFrame(this.start.bind(this))
         } catch (error) {
+            this.state = 'restar'
             this.isGameOver = true
         }
     }
@@ -109,8 +117,7 @@ export class Game {
                     this.initializeGame()
                     this.isStarted = false
                     this.isPaused = false
-                    if (this.count) resolve(false)
-                    resolve(true);
+                    resolve();
                 } else {
                     setTimeout(checkLevel, 100)
                 }

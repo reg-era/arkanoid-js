@@ -4,6 +4,7 @@ export class Player {
         this.info = container.infos
         this.game
 
+        this.health = 3
         this.score = 0
         this.level = 1
         this.stats = []
@@ -12,16 +13,13 @@ export class Player {
         this.lobyDisplayed = false
 
         document.addEventListener('keydown', (e) => {
-            if (e.key == 'Escape' && !this.game.isStarted) {  
-                console.log('lobidded');
+            if (e.key == 'Escape' && !this.game.isStarted) {
                 this.loby()
             }
         })
     }
 
     loby() {
-        console.log(this.lobyDisplayed);
-        
         if (!this.lobyDisplayed) {
             this.lobyDisplayed = true
             this.container.style.display = 'none'

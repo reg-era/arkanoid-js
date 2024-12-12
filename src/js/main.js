@@ -7,18 +7,31 @@ export const main = async () => {
     const containers = createContainers()
     const player = new Player(containers)
 
-
     for (let i = 0; i < Object.entries(levels).length; i++) {
         const oldScore = player.score
 
         const game = new Game(containers, levels[i], player)
         player.game = game
+
         player.setInfo(i + 1)
-        const state = await game.gameOver()
+        await game.gameOver()
+        
+        if (game.state === 'win') {
+            player.stats.push({ level: i + 1, score: player.score - oldScore })
+        } else if (game.state === 'lose') {
+            player.health--
+            if (player.health > 0) {
+                i--
+                console.log(game.bricks);
 
-        state ? player.stats.push({ level: i + 1, score: player.score - oldScore }) : i--
+            } else {
+                break
+            }
+        } else if (game.state === 'restar') {
+            i--
+        }
+
     }
-
     player.loby()
 }
 
