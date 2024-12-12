@@ -5,7 +5,7 @@ export class Paddle {
 
         this.paddle = this.createPaddle(container)
         this.position = Number.parseFloat(this.paddle.style.left.slice(0, -2))
-        this.boundLeft = container.getBoundingClientRect().x
+        this.boundLeft = container.getBoundingClientRect().left
         this.boundright = container.getBoundingClientRect().right
     }
 
@@ -14,20 +14,20 @@ export class Paddle {
         const rect = container.getBoundingClientRect()
 
         paddle.style.width = this.width + 'px'
-        paddle.style.left = ((rect.right - this.width) / 2) + 'px'
+        paddle.style.left = (rect.x + (rect.right / 2) - (this.width)) + 'px'
 
         return paddle
     }
 
     moveLeft() {
-        if (this.position >= this.boundLeft) {
+        if (this.position > this.boundLeft + 4) {
             this.paddle.style.left = this.position - this.speed + 'px'
             this.position -= this.speed
         }
     }
 
     moveRight() {
-        if (this.position+this.width <= this.boundright) {
+        if (this.position + this.width < this.boundright) {
             this.paddle.style.left = this.position + this.speed + 'px'
             this.position += this.speed
         }

@@ -68,11 +68,12 @@ export class Game {
                     }
                     break
                 case ' ':
-                    if (!this.isStarted && !this.isPaused) {
-                        this.start()
-                        this.isStarted = true
-                    } else {
+                    if (this.isStarted && !this.isPaused) {
                         this.isPaused = true
+                    }
+                    if (!this.isStarted) {
+                        this.isStarted = true
+                        this.start()
                     }
                     break
             }
@@ -107,6 +108,7 @@ export class Game {
                 if (this.isGameOver) {
                     this.initializeGame()
                     this.isStarted = false
+                    this.isPaused = false
                     if (this.count) resolve(false)
                     resolve(true);
                 } else {

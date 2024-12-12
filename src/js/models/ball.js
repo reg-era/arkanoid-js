@@ -42,6 +42,7 @@ export class Ball {
         const paddleRect = document.querySelector('.paddle').getBoundingClientRect()
         this.changeDirection(paddleRect)
         this.checkCollision()
+
     }
 
     checkCollision() {
@@ -81,7 +82,8 @@ export class Ball {
         return ball;
     }
 
-    setPosition(width){        
-        this.ball.style.left = width + 'px'
+    setPosition(width) {
+        this.x = width - this.size 
+        this.ball.style.left =( width - this.size )+ 'px'
     }
 }
