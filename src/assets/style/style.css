@@ -49,6 +49,22 @@ h1 span {
     text-shadow: 0 0 5px var(--neon-green), 0 0 10px var(--neon-green);
 }
 
+button {
+    background: var(--neon-purple);
+    border: none;
+    color: white;
+    font-size: 15px;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    width: 48%;
+}
+
+button:hover {
+    background: var(--neon-blue);
+}
+
 .levels {
     width: 100px;
     height: 60px;
@@ -155,18 +171,11 @@ body.blur::before {
     justify-content: space-between;
 }
 
-.menu button {
-    background: var(--neon-purple);
-    border: none;
+
+.loby h2 {
     color: white;
-    font-size: 15px;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-    width: 48%;
 }
 
-.menu button:hover {
-    background: var(--neon-blue);
+.loby span {
+    color: #4A00E0;
 }

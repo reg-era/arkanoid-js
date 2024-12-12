@@ -1,6 +1,9 @@
 export class Player {
-    constructor(infos) {
-        this.info = infos
+    constructor(container) {
+        this.container = container.container
+        this.info = container.infos
+        this.game
+
         this.score = 0
         this.level = 1
         this.stats = []
@@ -8,17 +11,24 @@ export class Player {
         this.menuDisplayed = false
         this.lobyDisplayed = false
 
-        addEventListener('keydown', (e) => {
-            if (e.key == 'Escape') this.loby()
+        document.addEventListener('keydown', (e) => {
+            if (e.key == 'Escape' && !this.game.isStarted) {  
+                console.log('lobidded');
+                this.loby()
+            }
         })
     }
 
-    loby() { 
-        if (!this.lobyDisplayed){
+    loby() {
+        console.log(this.lobyDisplayed);
+        
+        if (!this.lobyDisplayed) {
             this.lobyDisplayed = true
+            this.container.style.display = 'none'
             this.displayLoby()
-        }else{
+        } else {
             document.querySelector('.loby').remove()
+            this.container.style.display = 'block'
             this.lobyDisplayed = false
         }
     }
@@ -58,12 +68,12 @@ export class Player {
         return [document.querySelector('.continue'), document.querySelector('.restar')]
     }
 
-    displayLoby(){
+    displayLoby() {
         const loby = document.createElement('div')
         loby.classList.add('loby')
         loby.innerHTML = `
         <h1>game stats</h1>
-        ${this.stats.map(val=>`<h2>level: <span>${val.level}</span>score: <span>${val.score}</span></h2><br>`)}
+        ${this.stats.map(val => `<br><h2>level: <span>${val.level}</span>  score: <span>${val.score}</span></h2><br>`)}
         <button class="replay">replay</button>
         `
         document.body.appendChild(loby)
@@ -85,6 +95,7 @@ export class Player {
         <h1><span>Level</span> ${level ? level : this.level}<span>Score</span> ${score ? score : this.score}</h1>
     `
     }
+
 
     incrementScore(num) {
         this.score += num
