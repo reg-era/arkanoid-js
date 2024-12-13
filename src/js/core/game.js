@@ -57,20 +57,25 @@ export class Game {
         document.addEventListener('keydown', (event) => {
             switch (event.key) {
                 case 'ArrowLeft':
-                    this.paddle.moveLeft()
-                    if (!this.isStarted) {
-                        this.ball.setPosition(this.paddle.speed + this.paddle.position + (this.paddle.width / 2))
+                    if (!this.isPaused) {
+                        this.paddle.moveLeft()
+                        if (!this.isStarted) {
+                            this.ball.setPosition(this.paddle.speed + this.paddle.position + (this.paddle.width / 2))
+                        }
                     }
                     break
                 case 'ArrowRight':
-                    this.paddle.moveRight()
-                    if (!this.isStarted) {
-                        this.ball.setPosition(this.paddle.speed + this.paddle.position + (this.paddle.width / 2))
+                    if (!this.isPaused) {
+                        this.paddle.moveRight()
+                        if (!this.isStarted) {
+                            this.ball.setPosition(this.paddle.speed + this.paddle.position + (this.paddle.width / 2))
+                        }
                     }
                     break
                 case ' ':
                     if (!this.isStarted) {
                         this.isStarted = true
+                        this.paddle.paddle.style.transition = 'left 0.2s ease-out'
                         this.start()
                     } else if (this.isStarted && !this.isPaused) {
                         this.isPaused = true
@@ -115,6 +120,7 @@ export class Game {
             const checkLevel = () => {
                 if (this.isGameOver) {
                     this.initializeGame()
+                    this.paddle.paddle.style.transition = ''
                     this.isStarted = false
                     this.isPaused = false
                     resolve();
