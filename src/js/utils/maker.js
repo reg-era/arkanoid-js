@@ -1,5 +1,6 @@
 export const createContainers = () => {
     return {
+        gameMsg: makeDiv('game-msg', document.body),
         infos:makeDiv('infos', document.body),
         container: makeDiv('container', document.body),
         brickContainer: makeDiv('bricks-container', document.querySelector('.container')),

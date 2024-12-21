@@ -76,6 +76,7 @@ export class Game {
                     if (!this.isStarted) {
                         this.isStarted = true
                         this.paddle.paddle.style.transition = 'left 0.2s ease-out'
+                        this.model.gameMsg.textContent = ''
                         this.start()
                     } else if (this.isStarted && !this.isPaused) {
                         this.isPaused = true

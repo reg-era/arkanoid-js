@@ -23,6 +23,41 @@ body {
     align-items: center;
 }
 
+.game-msg {
+    color: var(--neon-blue);
+    font-size: 30px;
+    text-transform: uppercase;
+    position: absolute;
+    opacity: 0;
+    animation: fadeInOut 2s ease-in-out infinite, moveUpDown 1.5s ease-in-out infinite;
+}
+
+/* Fade in and out animation */
+@keyframes fadeInOut {
+
+    0%,
+    100% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Move up and down animation */
+@keyframes moveUpDown {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
 /* Text and Heading Styles */
 h1 {
     display: flex;
