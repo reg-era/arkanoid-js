@@ -1,3 +1,6 @@
+import { gameLogic } from "../main.js"
+import { createContainers } from "../utils/maker.js"
+
 export class Player {
     constructor(container) {
         this.container = container.container
@@ -17,9 +20,13 @@ export class Player {
         if (!this.lobyDisplayed) {
             this.lobyDisplayed = true
             this.container.style.display = 'none'
-            this.displayLoby()
+            const replay = this.displayLoby()
+            replay.addEventListener('click', () => {
+                const newContainer = createContainers()
+                gameLogic(newContainer, new Player(newContainer))
+            })
         } else {
-            document.querySelector('.loby').remove()
+            document.querySelector('.loby')?.remove()
             this.container.style.display = 'block'
             this.lobyDisplayed = false
         }

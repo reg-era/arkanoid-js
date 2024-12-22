@@ -20,7 +20,8 @@ export class Game {
         this.isPaused = false
         this.isStarted = false
 
-        this.gameControle
+        this.gameControleKeys
+        this.gameControleMouse
 
         this.createBricks();
         this.setupEventListeners();
@@ -50,7 +51,7 @@ export class Game {
     }
 
     setupEventListeners() {
-        this.gameControle = (event) => {
+        this.gameControleKeys = (event) => {
             event.preventDefault()
             switch (event.key) {
                 case 'ArrowLeft':
@@ -86,7 +87,30 @@ export class Game {
                     break
             }
         }
-        document.addEventListener('keydown', this.gameControle)
+
+
+        let lastMouseMoveTime = 0
+        const throttleDelay = 50
+        this.gameControleMouse = (event) => {
+            const now = Date.now()
+
+            if (now - lastMouseMoveTime >= throttleDelay) {
+                lastMouseMoveTime = now
+                // console.log(event.clientX);
+                
+                if (!this.isPaused) {
+                    const centre = this.paddle.position + (this.paddle.width / 2)
+                    if (event.clientX > centre) {
+                        this.paddle.moveRight(event.clientX)
+                    } else if (event.clientX < centre) {
+                        this.paddle.moveLeft(event.clientX)
+                    }
+                }
+            }
+        }
+
+        document.addEventListener('keydown', this.gameControleKeys)
+        document.addEventListener('mousemove', this.gameControleMouse)
     }
 
     async start() {
@@ -145,7 +169,7 @@ export class Game {
         this.isStarted = false
         this.isPaused = false
 
-        document.removeEventListener('keydown', this.gameControle)
+        document.removeEventListener('keydown', this.gameControleKeys)
     }
 
     // mapgame = 16*10

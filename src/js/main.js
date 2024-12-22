@@ -3,13 +3,17 @@ import { Game } from './core/game.js'
 import { createContainers } from './utils/maker.js'
 import { Player } from './core/player.js';
 
-export const main = async () => {
+export const main = () => {
     const containers = createContainers()
     const player = new Player(containers)
 
     containers.gameMsg.textContent = 'Press Space to Start'
     document.body.appendChild(containers.gameMsg)
 
+    gameLogic(containers, player)
+}
+
+export const gameLogic = async (containers, player) => {
     let lastgame
     let savedGame = false
     for (let i = 0; i < Object.entries(levels).length; i++) {

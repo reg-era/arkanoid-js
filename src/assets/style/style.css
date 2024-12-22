@@ -85,7 +85,7 @@ button {
     cursor: pointer;
     border-radius: 5px;
     transition: background-color 0.3s ease;
-    width: 48%;
+    /* width: 48%; */
 }
 
 button:hover {

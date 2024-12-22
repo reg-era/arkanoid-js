@@ -21,7 +21,6 @@ export class Ball {
 
     changeDirection(surface) {
         const ballRect = this.ball.getBoundingClientRect()
-
         if (
             ballRect.bottom >= surface.top &&
             ballRect.right >= surface.left &&
@@ -42,7 +41,6 @@ export class Ball {
         const paddleRect = document.querySelector('.paddle').getBoundingClientRect()
         this.changeDirection(paddleRect)
         this.checkCollision()
-
     }
 
     checkCollision() {

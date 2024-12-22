@@ -1,4 +1,7 @@
 export const createContainers = () => {
+    document.body.querySelectorAll('*').forEach(elem=>{
+        elem.remove()
+    })
     return {
         gameMsg: makeDiv('game-msg', document.body),
         infos:makeDiv('infos', document.body),
