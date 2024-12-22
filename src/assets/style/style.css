@@ -71,7 +71,7 @@ h1 {
 
 h1 span {
     color: var(--neon-purple);
-    font-size: 32px;
+    font-size: 25px;
     text-shadow: 0 0 5px var(--neon-green), 0 0 10px var(--neon-green);
 }
 

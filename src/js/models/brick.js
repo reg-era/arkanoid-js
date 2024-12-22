@@ -24,7 +24,7 @@ export class Brick {
             ballRect.right >= brickRect.x &&
             ballRect.bottom >= brickRect.y)) {
 
-            this.setBrick('type0',true)
+            this.setBrick('type0', true)
             return true
         }
         return false
@@ -43,5 +43,12 @@ export class Brick {
         }
         this.type = type
         this.distroyed = value
+    }
+
+    getValue() {
+        switch (this.type) {
+            case 'type0': return 0
+            case 'type1': return 1
+        }
     }
 }

@@ -11,12 +11,6 @@ export class Player {
 
         this.menuDisplayed = false
         this.lobyDisplayed = false
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key == 'Escape' && !this.game.isStarted) {
-                this.loby()
-            }
-        })
     }
 
     loby() {
@@ -37,11 +31,11 @@ export class Player {
             const [contin, restar] = this.displayMenu()
             document.body.classList.add('blur')
             return new Promise((resolve, reject) => {
-                contin.addEventListener('click', e => {
+                contin.addEventListener('click', () => {
                     this.removeMenu()
                     resolve(true)
                 })
-                restar.addEventListener('click', e => {
+                restar.addEventListener('click', () => {
                     this.removeMenu()
                     reject()
                 })
@@ -87,13 +81,12 @@ export class Player {
         this.menuDisplayed = false
     }
 
-    setInfo(level, score) {
+    setInfo(level, score, health) {
         this.level = level
         this.info.innerHTML = `
-        <h1><span>Level</span> ${level ? level : this.level}<span>Score</span> ${score ? score : this.score}</h1>
+        <h1><span>Level</span> ${level ? level : this.level}<span>Score</span> ${score ? score : this.score}<span>Health</span> ${health ? health : this.health}</h1>
     `
     }
-
 
     incrementScore(num) {
         this.score += num

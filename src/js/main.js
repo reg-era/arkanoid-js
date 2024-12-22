@@ -10,13 +10,17 @@ export const main = async () => {
     containers.gameMsg.textContent = 'Press Space to Start'
     document.body.appendChild(containers.gameMsg)
 
+    let lastgame
+    let savedGame = false
     for (let i = 0; i < Object.entries(levels).length; i++) {
         const oldScore = player.score
 
-        const game = new Game(containers, levels[i], player)
-        player.game = game
+        const game = new Game(containers, savedGame ? lastgame : levels[i], player)
 
+        savedGame = false
+        player.game = game
         player.setInfo(i + 1)
+
         await game.gameOver()
 
         if (game.state === 'win') {
@@ -26,6 +30,8 @@ export const main = async () => {
             player.health--
             if (player.health > 0) {
                 i--
+                lastgame = game.refactoreBricks()
+                savedGame = true
                 containers.gameMsg.textContent = 'You Lost This Round! Press Space to Try Again'
                 setTimeout(() => containers.gameMsg.textContent = '', 5000)
             } else {
@@ -38,6 +44,7 @@ export const main = async () => {
             i--
         }
     }
+
     player.loby()
 }
 

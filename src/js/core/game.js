@@ -20,14 +20,10 @@ export class Game {
         this.isPaused = false
         this.isStarted = false
 
+        this.gameControle
+
         this.createBricks();
         this.setupEventListeners();
-    }
-
-    initializeGame() {
-        const bricks = document.querySelectorAll('.brick')
-        if (bricks.length > 0) { bricks.forEach(el => el.remove()) }
-
     }
 
     createBricks() {
@@ -54,7 +50,8 @@ export class Game {
     }
 
     setupEventListeners() {
-        document.addEventListener('keydown', (event) => {
+        this.gameControle = (event) => {
+            event.preventDefault()
             switch (event.key) {
                 case 'ArrowLeft':
                     if (!this.isPaused) {
@@ -75,28 +72,38 @@ export class Game {
                 case ' ':
                     if (!this.isStarted) {
                         this.isStarted = true
-                        this.paddle.paddle.style.transition = 'left 0.2s ease-out'
                         this.model.gameMsg.textContent = ''
+                        this.paddle.paddle.style.transition = 'left 0.2s ease-out'
                         this.start()
                     } else if (this.isStarted && !this.isPaused) {
                         this.isPaused = true
                     }
                     break
+                case 'Escape':
+                    if (!this.isStarted) {
+                        this.player.loby()
+                    }
+                    break
             }
-        });
+        }
+        document.addEventListener('keydown', this.gameControle)
     }
 
     async start() {
         try {
-            this.ball.move()
+            if (this.isStarted) this.ball.move()
+
             if (this.isPaused) {
                 await this.player.menu()
                 this.isPaused = false
             }
+
             if ((this.ball.y + this.ball.size) >= this.container.getBoundingClientRect().bottom) {
                 this.state = 'lose'
                 this.isGameOver = true
+                return
             }
+
             for (let i = 0; i < this.bricks.length; i++) {
                 if (!this.bricks[i].distroyed && this.bricks[i].isDistroyed()) {
                     this.count--
@@ -120,10 +127,7 @@ export class Game {
         return new Promise((resolve, reject) => {
             const checkLevel = () => {
                 if (this.isGameOver) {
-                    this.initializeGame()
-                    this.paddle.paddle.style.transition = ''
-                    this.isStarted = false
-                    this.isPaused = false
+                    this.resetGame()
                     resolve();
                 } else {
                     setTimeout(checkLevel, 100)
@@ -131,5 +135,30 @@ export class Game {
             }
             checkLevel()
         })
+    }
+
+    resetGame() {
+        const bricks = document.querySelectorAll('.brick')
+        if (bricks.length > 0) { bricks.forEach(el => el.remove()) }
+
+        this.paddle.paddle.style.transition = ''
+        this.isStarted = false
+        this.isPaused = false
+
+        document.removeEventListener('keydown', this.gameControle)
+    }
+
+    // mapgame = 16*10
+    refactoreBricks() {
+        const newMap = []
+        let row = []
+        this.bricks.forEach(brick => {
+            if (row.length % 16 === 0) {
+                newMap.push(row)
+                row = []
+            }
+            row.push(brick.getValue())
+        })
+        return newMap
     }
 }
