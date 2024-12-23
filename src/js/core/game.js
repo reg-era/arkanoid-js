@@ -52,42 +52,26 @@ export class Game {
 
     setupEventListeners() {
         this.gameControleKeys = (event) => {
-            event.preventDefault()
-            switch (event.key) {
-                case 'ArrowRight':
-                    if (!this.isPaused) {
-                        this.paddle.move('right')
-                        if (!this.isStarted) {
-                            this.ball.setBallPosition(this.paddle.position, this.paddle.width)
-                        }
-                    }
-                    break
-                case 'ArrowLeft':
-                    if (!this.isPaused) {
-                        this.paddle.move('left')
-                        if (!this.isStarted) {
-                            this.ball.setBallPosition(this.paddle.position, this.paddle.width)
-                        }
-                    }
-                    break
-                case ' ':
-                    if (!this.isStarted) {
-                        this.isStarted = true
-                        this.model.gameMsg.textContent = ''
-                        this.paddle.paddle.style.transition = 'left 0.2s ease-out'
-                        this.start()
-                    } else if (this.isStarted && !this.isPaused) {
-                        this.isPaused = true
-                    }
-                    break
-                case 'Escape':
-                    if (!this.isStarted) {
-                        this.player.loby()
-                    }
-                    break
+            // event.preventDefault()
+            if ((event.key === 'ArrowRight' || event.key === 'd') && !this.isPaused) {
+                this.paddle.move('right')
+                !this.isStarted && this.ball.setBallPosition(this.paddle.position, this.paddle.width)
+            } else if ((event.key === 'ArrowLeft' || event.key === 'a') && !this.isPaused) {
+                this.paddle.move('left')
+                !this.isStarted && this.ball.setBallPosition(this.paddle.position, this.paddle.width)
+            } else if (event.key === ' ') {
+                if (!this.isStarted) {
+                    this.isStarted = true
+                    this.model.gameMsg.textContent = ''
+                    this.paddle.paddle.style.transition = 'left 0.1s ease-out'
+                    this.start()
+                } else if (this.isStarted && !this.isPaused) {
+                    this.isPaused = true
+                }
+            } else if (event.key === 'Escape' && !this.isStarted) {
+                this.player.loby()
             }
         }
-
 
         let lastMouseMoveTime = 0
         const throttleDelay = 50
@@ -96,7 +80,6 @@ export class Game {
 
             if (now - lastMouseMoveTime >= throttleDelay) {
                 lastMouseMoveTime = now
-
                 if (!this.isPaused) {
                     const centre = this.paddle.position + (this.paddle.width / 2)
                     if (event.clientX > centre) {
@@ -123,13 +106,13 @@ export class Game {
                 this.isPaused = false
             }
 
-            const dangerZone = this.model.paddleContainer.getBoundingClientRect()
-            const deadline = dangerZone.bottom - ((dangerZone.bottom - dangerZone.top) / 2)
-            if ((this.ball.y + this.ball.size) >= deadline) {
-                this.state = 'lose'
-                this.isGameOver = true
-                return
-            }
+            // const dangerZone = this.model.paddleContainer.getBoundingClientRect()
+            // const deadline = dangerZone.bottom - ((dangerZone.bottom - dangerZone.top) / 2)
+            // if ((this.ball.y + this.ball.size) >= deadline) {
+                // this.state = 'lose'
+                // this.isGameOver = true
+                // return
+            // }
 
             for (let i = 0; i < this.bricks.length; i++) {
                 if (!this.bricks[i].distroyed && this.bricks[i].isDistroyed()) {
