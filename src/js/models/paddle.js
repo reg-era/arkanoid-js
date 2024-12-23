@@ -18,31 +18,32 @@ export class Paddle {
         return paddle
     }
 
-    moveLeft(dis) {
-        const boundLeft = this.container.getBoundingClientRect().left
-        console.log(boundLeft);
-        
-        if (this.position > boundLeft) {
-            if (dis) {
-                this.paddle.style.left = dis - (this.width / 2) + 'px'
-                this.position = dis - (this.width / 2)
-                return
-            }
-            this.paddle.style.left = this.position - this.speed + 'px'
-            this.position -= this.speed
-        }
-    }
+    move(direct, dis) {
+        const bound = this.container.getBoundingClientRect()
+        const vertexez = this.position + (direct === 'right' ? this.width : 0)
 
-    moveRight(dis) {
-        const boundright = this.container.getBoundingClientRect().right
-        if (this.position + this.width < boundright) {
+        if (
+            (direct === 'right' && vertexez < bound.right) ||
+            (direct === 'left' && this.position > bound.left)
+        ) {
+            let newPos
+
             if (dis) {
-                this.paddle.style.left = dis - (this.width / 2) + 'px'
-                this.position = dis - (this.width / 2)
-                return
+                newPos = dis - (this.width / 2)
+            } else {
+                newPos = this.position + (direct === 'right' ? this.speed : -this.speed)
             }
-            this.paddle.style.left = this.position + this.speed + 'px'
-            this.position += this.speed
+
+            if (direct === 'right' && newPos + this.width > bound.right) {
+                newPos = bound.right - this.width
+            }
+
+            if (direct === 'left' && newPos < bound.left) {
+                newPos = bound.left
+            }
+
+            this.paddle.style.left = newPos + 'px'
+            this.position = newPos
         }
     }
 }

@@ -54,17 +54,17 @@ export class Game {
         this.gameControleKeys = (event) => {
             event.preventDefault()
             switch (event.key) {
-                case 'ArrowLeft':
+                case 'ArrowRight':
                     if (!this.isPaused) {
-                        this.paddle.moveLeft()
+                        this.paddle.move('right')
                         if (!this.isStarted) {
                             this.ball.setPosition(this.paddle.speed + this.paddle.position + (this.paddle.width / 2))
                         }
                     }
                     break
-                case 'ArrowRight':
+                case 'ArrowLeft':
                     if (!this.isPaused) {
-                        this.paddle.moveRight()
+                        this.paddle.move('left')
                         if (!this.isStarted) {
                             this.ball.setPosition(this.paddle.speed + this.paddle.position + (this.paddle.width / 2))
                         }
@@ -96,14 +96,15 @@ export class Game {
 
             if (now - lastMouseMoveTime >= throttleDelay) {
                 lastMouseMoveTime = now
-                // console.log(event.clientX);
-                
+
                 if (!this.isPaused) {
                     const centre = this.paddle.position + (this.paddle.width / 2)
                     if (event.clientX > centre) {
-                        this.paddle.moveRight(event.clientX)
+                        this.paddle.move('right', event.clientX)
+                        !this.isStarted && this.ball.setPosition(event.clientX)
                     } else if (event.clientX < centre) {
-                        this.paddle.moveLeft(event.clientX)
+                        this.paddle.move('left', event.clientX)
+                        !this.isStarted && this.ball.setPosition(event.clientX)
                     }
                 }
             }
@@ -122,12 +123,14 @@ export class Game {
                 this.isPaused = false
             }
 
-            if ((this.ball.y + this.ball.size) >= this.container.getBoundingClientRect().bottom) {
+            const dangerZone = this.model.paddleContainer.getBoundingClientRect()
+            const deadline = dangerZone.bottom - ((dangerZone.bottom - dangerZone.top) / 2)
+            if ((this.ball.y + this.ball.size) >= deadline) {
                 this.state = 'lose'
                 this.isGameOver = true
                 return
             }
-
+            // 
             for (let i = 0; i < this.bricks.length; i++) {
                 if (!this.bricks[i].distroyed && this.bricks[i].isDistroyed()) {
                     this.count--
