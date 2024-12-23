@@ -106,13 +106,13 @@ export class Game {
                 this.isPaused = false
             }
 
-            // const dangerZone = this.model.paddleContainer.getBoundingClientRect()
-            // const deadline = dangerZone.bottom - ((dangerZone.bottom - dangerZone.top) / 2)
-            // if ((this.ball.y + this.ball.size) >= deadline) {
-                // this.state = 'lose'
-                // this.isGameOver = true
-                // return
-            // }
+            const dangerZone = this.model.paddleContainer.getBoundingClientRect()
+            const deadline = dangerZone.bottom - ((dangerZone.bottom - dangerZone.top) / 2)
+            if ((this.ball.y + this.ball.size) >= deadline) {
+                this.state = 'lose'
+                this.isGameOver = true
+                return
+            }
 
             for (let i = 0; i < this.bricks.length; i++) {
                 if (!this.bricks[i].distroyed && this.bricks[i].isDistroyed()) {

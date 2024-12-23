@@ -8,7 +8,15 @@ export class Ball {
         this.directionY = -1
 
         this.size = 15
-        this.speed = 5
+        this.speed = 8
+
+        this.event
+        document.addEventListener('mousemove', (e) => {
+            this.event = {
+                x: e.clientX,
+                y: e.clientY
+            }
+        })
 
         this.ball = this.createBall()
     }
@@ -39,28 +47,33 @@ export class Ball {
         const rect = this.container.getBoundingClientRect()
 
         if (this.x <= rect.left || this.x + this.size >= rect.right) {
-            this.x = (this.x <= rect.left) ? rect.left : (rect.right - this.size)
             this.directionX *= -1
         }
-        if (this.y <= (rect.top + 13) || this.y + this.size >= rect.bottom) {
-            this.y = (this.y <= (rect.top + 13)) ? (rect.top + 13) : rect.bottom - this.size
+        if (this.y <= rect.top || this.y + this.size >= rect.bottom) {
             this.directionY *= -1
         }
     }
 
     move() {
         const bound = this.container.getBoundingClientRect()
+        const paddleRect = document.querySelector('.paddle').getBoundingClientRect()
+
         let newPosX = this.x + (this.speed * this.directionX)
         let newPosY = this.y + (this.speed * this.directionY)
 
+        // protecting from container
+        if (newPosX < bound.left) newPosX = bound.left
+        if (newPosX + this.size > bound.right) newPosX = bound.right - this.size
+        if (newPosY - this.size < bound.top) {
+            this.directionY *= -1
+            newPosY = bound.top + this.size
+        }
 
         this.x = newPosX
         this.y = newPosY
         this.ball.style.left = this.x + 'px'
         this.ball.style.top = this.y + 'px'
-        
-        const paddleRect = document.querySelector('.paddle').getBoundingClientRect()
-        
+
         this.changeDirection(paddleRect)
         this.checkCollision()
     }
