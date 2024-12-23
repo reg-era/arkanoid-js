@@ -7,8 +7,8 @@ export class Ball {
         this.directionX = 0
         this.directionY = -1
 
-        this.size = 30
-        this.speed = 10
+        this.size = 15
+        this.speed = 5
 
         this.ball = this.createBall()
     }
@@ -100,29 +100,30 @@ export class Ball {
     //     } else {
     //         this.ball.style.top = this.y + 'px';
     //     }
-    
+
     //     if (this.y + this.size > paddleBound.bottom) {
     //         this.ball.style.top = paddleBound.bottom - this.size + 'px';
     //     } else {
     //         this.ball.style.top = this.y + 'px';
     //     }
-    
+
     //     if (this.x - this.size < paddleBound.left) {
     //         this.ball.style.left = paddleBound.left - this.size + 'px';
     //     } else {
     //         this.ball.style.left = this.x + 'px';
     //     }
-    
+
     //     if (this.x + this.size > paddleBound.right) {
     //         this.ball.style.left = paddleBound.right - this.size + 'px';
     //     } else {
     //         this.ball.style.left = this.x + 'px';
     //     }
     // }
-    
 
-    setPosition(width) {
-        this.x = width
-        this.ball.style.left = width + 'px'
+
+    setBallPosition(left, width) {
+        const newPos = left + (width / 2) - (this.size / 2)
+        this.x = newPos
+        this.ball.style.left = newPos + 'px'
     }
 }

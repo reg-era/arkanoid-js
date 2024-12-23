@@ -58,7 +58,7 @@ export class Game {
                     if (!this.isPaused) {
                         this.paddle.move('right')
                         if (!this.isStarted) {
-                            this.ball.setPosition(this.paddle.speed + this.paddle.position + (this.paddle.width / 2))
+                            this.ball.setBallPosition(this.paddle.position, this.paddle.width)
                         }
                     }
                     break
@@ -66,7 +66,7 @@ export class Game {
                     if (!this.isPaused) {
                         this.paddle.move('left')
                         if (!this.isStarted) {
-                            this.ball.setPosition(this.paddle.speed + this.paddle.position + (this.paddle.width / 2))
+                            this.ball.setBallPosition(this.paddle.position, this.paddle.width)
                         }
                     }
                     break
@@ -101,10 +101,10 @@ export class Game {
                     const centre = this.paddle.position + (this.paddle.width / 2)
                     if (event.clientX > centre) {
                         this.paddle.move('right', event.clientX)
-                        !this.isStarted && this.ball.setPosition(event.clientX)
+                        !this.isStarted && this.ball.setBallPosition(this.paddle.position, this.paddle.width)
                     } else if (event.clientX < centre) {
                         this.paddle.move('left', event.clientX)
-                        !this.isStarted && this.ball.setPosition(event.clientX)
+                        !this.isStarted && this.ball.setBallPosition(this.paddle.position, this.paddle.width)
                     }
                 }
             }
@@ -130,7 +130,7 @@ export class Game {
                 this.isGameOver = true
                 return
             }
-            // 
+
             for (let i = 0; i < this.bricks.length; i++) {
                 if (!this.bricks[i].distroyed && this.bricks[i].isDistroyed()) {
                     this.count--
