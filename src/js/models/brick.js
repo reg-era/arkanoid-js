@@ -1,18 +1,19 @@
 export class Brick {
-    constructor(type, value, ball) {
-        this.type = type
-        this.distroyed = value
-        this.ball = ball
+    constructor(type, ball) {
         this.brick
+        this.ball = ball
+        this.type = type
+        this.reward
+        this.distroyed
     }
 
     render(container) {
         const elem = document.createElement('div')
         elem.classList.add('brick')
-        this.brick = elem
-
-        this.setBrick(this.type, this.distroyed)
         container.appendChild(elem)
+
+        this.brick = elem
+        this.setBrick(this.type)
     }
 
     isDistroyed() {
@@ -23,32 +24,45 @@ export class Brick {
             ballRect.x <= brickRect.right &&
             ballRect.right >= brickRect.x &&
             ballRect.bottom >= brickRect.y)) {
-
-            this.setBrick('type0', true)
             return true
         }
         return false
     }
 
-    setBrick(type, value) {
+    setBrick(type) {
+        this.type = type
         switch (type) {
             case 'type0':
                 this.brick.style.background = 'black'
                 this.brick.style.border = 'none'
+                this.reward = 0
+                this.distroyed = true
+
                 break;
             case 'type1':
-                this.brick.style.background = 'linear-gradient(135deg, #4A00E0, #8E2DE2)'
+                this.brick.style.background = 'linear-gradient(135deg,rgb(67, 0, 175),rgb(220, 217, 223))'
                 this.brick.style.border = '1px solid #64FFDA'
+                this.reward = 5
+                this.distroyed = false
                 break;
+            case 'type2':
+                this.brick.style.background = 'linear-gradient(135deg,rgb(196, 0, 0), rgb(220, 217, 223))'
+                this.brick.style.border = '1px solid #64FFDA'
+                this.reward = 10
+                this.distroyed = false
+                break;
+            case 'type3':
+                this.brick.style.background = 'linear-gradient(135deg,rgb(251, 255, 0), rgb(220, 217, 223))'
+                this.brick.style.border = '1px solid #64FFDA'
+                this.reward = 20
+                this.distroyed = false
+                break;
+
         }
-        this.type = type
-        this.distroyed = value
     }
 
-    getValue() {
-        switch (this.type) {
-            case 'type0': return 0
-            case 'type1': return 1
-        }
+    hitBrick() {
+        const currentType = Number.parseInt(this.type.slice(-1));
+        (currentType <= 0) ? this.setBrick('type0') : this.setBrick(`type${currentType - 1}`)
     }
 }

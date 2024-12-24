@@ -30,20 +30,8 @@ export class Game {
     createBricks() {
         this.level.forEach(row => {
             row.forEach(number => {
-                let type, value
-                switch (number) {
-                    case 1:
-                        this.count++
-                        type = 'type1'
-                        value = false
-                        break;
-                    default:
-                        type = 'type0'
-                        value = true
-                        break;
-                }
-
-                const brick = new Brick(type, value, this.ball.ball)
+                this.count += number
+                const brick = new Brick('type' + number, this.ball.ball)
                 brick.render(this.model.brickContainer)
                 this.bricks.push(brick)
             })
@@ -121,7 +109,9 @@ export class Game {
                         this.state = 'win'
                         this.isGameOver = true
                     }
-                    this.player.incrementScore(5)
+                    this.player.incrementScore(this.bricks[i].reward)
+                    this.bricks[i].hitBrick()
+
                     const brickRect = this.bricks[i].brick.getBoundingClientRect()
                     this.ball.changeDirection(brickRect)
                 }
@@ -167,7 +157,7 @@ export class Game {
                 newMap.push(row)
                 row = []
             }
-            row.push(brick.getValue())
+            row.push(Number.parseInt(brick.type.slice(-1)))
         })
         return newMap
     }
